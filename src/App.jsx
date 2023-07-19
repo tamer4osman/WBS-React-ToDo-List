@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const [todos, setTodos] = useState(initialTodos);
+  const [editTodoId, setEditTodoId] = useState(null);
   const [editTodoText, setEditTodoText] = useState('');
 
   // Load todos from localStorage on component mount
@@ -59,7 +60,34 @@ function App() {
 
   return (
     <div>
-
+      <button onClick={addTodo}>Add Todo</button>
+      <ul>
+        {todos.map((todo) => (
+          <li key={todo.id}>
+            {editTodoId === todo.id ? (
+              <>
+                <input
+                  type="text"
+                  value={editTodoText}
+                  onChange={handleEditChange}
+                />
+                <button onClick={() => handleSaveEdit(todo.id)}>Save</button>
+              </>
+            ) : (
+              <>
+                <input
+                  type="checkbox"
+                  checked={todo.done}
+                  onChange={() => toggleDone(todo.id)}
+                />
+                <span>{todo.text}</span>
+                <button onClick={() => handleEditTodo(todo.id)}>Edit</button>
+                <button onClick={() => removeTodo(todo.id)}>Remove</button>
+              </>
+            )}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
