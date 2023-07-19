@@ -4,7 +4,7 @@ import './App.css'
 function App() {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
   const [todos, setTodos] = useState(initialTodos);
-
+  const [editTodoText, setEditTodoText] = useState('');
 
   // Load todos from localStorage on component mount
   useEffect(() => {
@@ -48,7 +48,14 @@ function App() {
     setEditTodoText(event.target.value);
   };
 
-
+  const handleSaveEdit = (id) => {
+    const updatedTodos = todos.map((todo) =>
+      todo.id === id ? { ...todo, text: editTodoText } : todo
+    );
+    setTodos(updatedTodos);
+    setEditTodoId(null);
+    setEditTodoText('');
+  };
 
   return (
     <div>
