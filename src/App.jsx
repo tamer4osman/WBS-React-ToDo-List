@@ -44,6 +44,10 @@ function App() {
     setEditTodoText(todoToEdit.text);
   };
 
+  const handleEditChange = (event) => {
+    setEditTodoText(event.target.value);
+  };
+
 
 
   return (
