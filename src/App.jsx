@@ -16,6 +16,15 @@ function App() {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
+  const addTodo = () => {
+    const newTodo = {
+      done: false,
+      id: Date.now(), // You can use any unique identifier here
+      text: "New todo",
+    };
+    setTodos([...todos, newTodo]);
+  };
+
 
 
   return (
