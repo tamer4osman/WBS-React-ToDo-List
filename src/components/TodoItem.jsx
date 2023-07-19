@@ -65,7 +65,11 @@ const TodoItem = (props) => {
       <div className="col-7 col-md-9 text-start">
         {/* Text */}
         {!editMode && (
-          <div onDoubleClick={() => setEditMode(true)} style={{ cursor: "pointer" }}>
+          <div
+            onDoubleClick={() => setEditMode(true)}
+            style={{ cursor: "pointer" }}
+            className={isDone ? "text-decoration-line-through text-secondary" : ""}
+          >
             {props.text}
           </div>
         )}
