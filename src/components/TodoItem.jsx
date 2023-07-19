@@ -59,7 +59,7 @@ const TodoItem = (props) => {
     <div className="row align-items-center flex-nowrap g-1 g-md-4 mb-2">
       {/* Done Checkbox */}
       <div className="col">
-        <button className="btn" onClick={() => changeDoneStatus()}>
+        <button className="btn" onClick={changeDoneStatus}>
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill={isDone ? "#1D8757" : "#6C7580"} d={isDone ? checkedPath : uncheckedPath} />
           </svg>
@@ -85,8 +85,8 @@ const TodoItem = (props) => {
             type="text"
             className="form-control"
             defaultValue={inputFieldText}
-            onKeyDown={(event) => editFinished(event)}
-            onChange={(event) => inputChangeHandler(event)}
+            onKeyDown={editFinished}
+            onChange={inputChangeHandler}
             autoFocus
           />
         )}
@@ -107,7 +107,7 @@ const TodoItem = (props) => {
         )}
 
         {/* Ok Cancel Buttons */}
-        {editMode && <OkCancelButtons okHandler={(event) => editFinished(event)} cancelHandler={() => setEditMode(false)} />}
+        {editMode && <OkCancelButtons okHandler={editFinished} cancelHandler={() => setEditMode(false)} />}
       </div>
 
       {/* Delete Button */}
