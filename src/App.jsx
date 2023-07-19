@@ -25,11 +25,16 @@ function App() {
     setTodos([...todos, newTodo]);
   };
 
+  const removeTodo = (id) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
+
 
 
   return (
     <div>
-      
+
     </div>
   );
 };
