@@ -38,6 +38,12 @@ function App() {
     setTodos(updatedTodos);
   };
 
+  const handleEditTodo = (id) => {
+    setEditTodoId(id);
+    const todoToEdit = todos.find((todo) => todo.id === id);
+    setEditTodoText(todoToEdit.text);
+  };
+
 
 
   return (
