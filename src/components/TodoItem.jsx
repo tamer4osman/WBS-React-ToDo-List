@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import OkCancelButtons from "./OkCancelButtons";
 
 /* eslint-disable react/prop-types */
@@ -6,10 +6,7 @@ const TodoItem = (props) => {
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
   const [isDone, setIsDone] = useState(props.done);
-
-  // we need a reference on the field in order for the ok/cancel button to work
-  // as we need to be able to get the value of the field if it's not the event target
-  const inputFieldRef = useRef(null);
+  const [inputFieldText, setInputFieldText] = useState(props.text);
 
   // extract handlers from props
   const { doneHandler, editHandler, deleteHandler } = props;
@@ -19,6 +16,14 @@ const TodoItem = (props) => {
     "M12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Zm0-2q3.35 0 5.675-2.325T20 12q0-3.35-2.325-5.675T12 4Q8.65 4 6.325 6.325T4 12q0 3.35 2.325 5.675T12 20Zm0-8Z";
   const checkedPath =
     "m10.6 13.8l-2.15-2.15q-.275-.275-.7-.275t-.7.275q-.275.275-.275.7t.275.7L9.9 15.9q.3.3.7.3t.7-.3l5.65-5.65q.275-.275.275-.7t-.275-.7q-.275-.275-.7-.275t-.7.275L10.6 13.8ZM12 22q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Zm0-2q3.35 0 5.675-2.325T20 12q0-3.35-2.325-5.675T12 4Q8.65 4 6.325 6.325T4 12q0 3.35 2.325 5.675T12 20Zm0-8Z";
+
+  // we need to handle input field changes a little different as we never
+  // want inputFieldText to be empty
+  const inputChangeHandler = (event) => {
+    if (event.currentTarget.value !== "") {
+      setInputFieldText(event.currentTarget.value);
+    }
+  };
 
   // changes status of todo to done
   const changeDoneStatus = () => {
@@ -38,9 +43,9 @@ const TodoItem = (props) => {
     }
 
     if (event.type === "click") {
-      if (inputFieldRef.current.value !== "") {
+      if (inputFieldText !== "") {
         setEditMode(false);
-        editHandler(props.id, inputFieldRef.current.value);
+        editHandler(props.id, inputFieldText);
       }
     }
   };
@@ -70,7 +75,7 @@ const TodoItem = (props) => {
             style={{ cursor: "pointer" }}
             className={isDone ? "text-decoration-line-through text-secondary" : ""}
           >
-            {props.text}
+            {inputFieldText}
           </div>
         )}
 
@@ -79,9 +84,9 @@ const TodoItem = (props) => {
           <input
             type="text"
             className="form-control"
-            ref={inputFieldRef}
-            defaultValue={props.text}
+            defaultValue={inputFieldText}
             onKeyDown={(event) => editFinished(event)}
+            onChange={(event) => inputChangeHandler(event)}
             autoFocus
           />
         )}
