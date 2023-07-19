@@ -87,6 +87,7 @@ const TodoItem = (props) => {
             defaultValue={inputFieldText}
             onKeyDown={editFinished}
             onChange={inputChangeHandler}
+            onBlur={() => setEditMode(false)}
             autoFocus
           />
         )}
