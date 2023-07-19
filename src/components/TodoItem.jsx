@@ -25,7 +25,7 @@ const TodoItem = (props) => {
     }
   };
 
-  // changes status of todo to done
+  // changes "done" status
   const changeDoneStatus = () => {
     setIsDone(!isDone);
     doneHandler(props.id, !isDone);
