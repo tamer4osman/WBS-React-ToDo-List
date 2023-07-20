@@ -1,28 +1,28 @@
-import { useState, useEffect } from 'react'
-import './App.css'
+import { useState, useEffect } from "react";
 import TodoList from "./components/TodoList.jsx";
+import "./App.css";
 
 function App() {
-  const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
+  const initialTodos = JSON.parse(localStorage.getItem("todos")) || [];
   const [todos, setTodos] = useState(initialTodos);
-  const [editTodoId, setEditTodoId] = useState(null);
-  const [editTodoText, setEditTodoText] = useState('');
+  // const [editTodoId, setEditTodoId] = useState(null);
+  // const [editTodoText, setEditTodoText] = useState("");
 
   // Load todos from localStorage on component mount
   useEffect(() => {
-    const storedTodos = JSON.parse(localStorage.getItem('todos')) || [];
+    const storedTodos = JSON.parse(localStorage.getItem("todos")) || [];
     setTodos(storedTodos);
   }, []);
 
   // Save todos to localStorage whenever 'todos' changes
   useEffect(() => {
-    localStorage.setItem('todos', JSON.stringify(todos));
+    localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
   const addTodo = () => {
     const newTodo = {
       done: false,
-      id: Date.now(), // You can use any unique identifier here
+      id: crypto.randomUUID(), // You can use any unique identifier here
       text: "New todo",
     };
     setTodos([...todos, newTodo]);
@@ -34,53 +34,67 @@ function App() {
   };
 
   const toggleDone = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, done: !todo.done } : todo
-    );
+    const updatedTodos = todos.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo));
     setTodos(updatedTodos);
   };
 
-  const handleEditTodo = (id) => {
-    setEditTodoId(id);
-    const todoToEdit = todos.find((todo) => todo.id === id);
-    setEditTodoText(todoToEdit.text);
-  };
+  // const handleEditTodo = (id) => {
+  //   setEditTodoId(id);
+  //   const todoToEdit = todos.find((todo) => todo.id === id);
+  //   setEditTodoText(todoToEdit.text);
+  // };
 
-  const handleEditChange = (event) => {
-    setEditTodoText(event.target.value);
-  };
+  // const handleEditChange = (event) => {
+  //   setEditTodoText(event.target.value);
+  // };
 
-  const handleSaveEdit = (id) => {
-    const updatedTodos = todos.map((todo) =>
-      todo.id === id ? { ...todo, text: editTodoText } : todo
-    );
+  const handleSaveEdit = (id, newText) => {
+    const updatedTodos = todos.map((todo) => (todo.id === id ? { ...todo, text: newText } : todo));
     setTodos(updatedTodos);
-    setEditTodoId(null);
-    setEditTodoText('');
+    // setEditTodoId(null);
+    // setEditTodoText("");
   };
 
   return (
-    <div>
-      <button onClick={addTodo}>Add Todo</button>
-      <ul>
+    <div className="d-flex justify-content-center align-items-center h-100 m-0 m-md-5">
+      <div className="container content">
+        {/* Header */}
+        <div className="row mb-4">
+          <div className="col-12 text-center">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp" alt="Check" width="60" />
+            <h2 className="my-4">ToDo List</h2>
+          </div>
+        </div>
+
+        {/* Add Todo Field */}
+        <div className="row mb-4">
+          <div className="col-8 col-md-10">
+            <input type="text" className="form-control" placeholder="Add new task..." />
+          </div>
+          <div className="col-4 col-md-2">
+            <button className="btn btn-primary w-100" onClick={addTodo}>
+              Add Todo
+            </button>
+          </div>
+        </div>
+
+        {/* List Display */}
+        <div className="row">
+          <div className="col-12">
+            <TodoList todos={todos} doneHandler={toggleDone} editHandler={handleSaveEdit} deleteHandler={removeTodo} />
+          </div>
+        </div>
+        {/* <ul>
         {todos.map((todo) => (
           <li key={todo.id}>
             {editTodoId === todo.id ? (
               <>
-                <input
-                  type="text"
-                  value={editTodoText}
-                  onChange={handleEditChange}
-                />
+                <input type="text" value={editTodoText} onChange={handleEditChange} />
                 <button onClick={() => handleSaveEdit(todo.id)}>Save</button>
               </>
             ) : (
               <>
-                <input
-                  type="checkbox"
-                  checked={todo.done}
-                  onChange={() => toggleDone(todo.id)}
-                />
+                <input type="checkbox" checked={todo.done} onChange={() => toggleDone(todo.id)} />
                 <span>{todo.text}</span>
                 <button onClick={() => handleEditTodo(todo.id)}>Edit</button>
                 <button onClick={() => removeTodo(todo.id)}>Remove</button>
@@ -88,9 +102,10 @@ function App() {
             )}
           </li>
         ))}
-      </ul>
+      </ul> */}
+      </div>
     </div>
   );
-};
+}
 
 export default App;
