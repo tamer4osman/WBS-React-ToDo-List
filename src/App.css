@@ -25,12 +25,21 @@ body {
   border-radius: 2rem;
   border: 1px solid #424242;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, .5);
+  padding: 2rem;
+  transition: all 0.3s ease-in-out;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 575px) {
+  body {
+    overflow-x: hidden;
+  }
+
   .content {
     box-shadow: none;
     border: none;
     border-radius: 0;
+    padding: 1rem;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 1rem 2rem -.75rem rgba(0, 0, 0, .5);
   }
 }
