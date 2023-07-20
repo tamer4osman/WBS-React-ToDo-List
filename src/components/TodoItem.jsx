@@ -96,7 +96,7 @@ const TodoItem = (props) => {
       </div>
 
       {/* Edit Button */}
-      <div className="col">
+      <div className="col text-center">
         {/* Edit Button */}
         {!editMode && (
           <button className="btn btn-warning" onClick={() => setEditMode(true)}>
@@ -114,7 +114,7 @@ const TodoItem = (props) => {
       </div>
 
       {/* Delete Button */}
-      <div className="col">
+      <div className="col text-center">
         {/* Delete Button */}
         {!deleteMode && (
           <button className="btn btn-danger" onClick={() => setDeleteMode(true)}>
