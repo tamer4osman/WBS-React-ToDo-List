@@ -68,7 +68,7 @@ const TodoItem = (props) => {
       </div>
 
       {/* Text / Edit Field */}
-      <div className="col-7 col-md-9 text-start">
+      <div className="col-5 col-md-7 col-lg-9 text-start">
         {/* Text */}
         {!editMode && (
           <div
@@ -89,6 +89,7 @@ const TodoItem = (props) => {
             onKeyDown={editFinished}
             onChange={inputChangeHandler}
             onBlur={() => setEditMode(false)}
+            onFocus={(event) => event.currentTarget.select()}
             autoFocus
           />
         )}
