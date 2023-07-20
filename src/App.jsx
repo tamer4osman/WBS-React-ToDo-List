@@ -5,6 +5,7 @@ import "./App.css";
 function App() {
   const initialTodos = JSON.parse(localStorage.getItem("todos")) || [];
   const [todos, setTodos] = useState(initialTodos);
+  const [addTodoFieldText, setAddTodoFieldText] = useState("");
   // const [editTodoId, setEditTodoId] = useState(null);
   // const [editTodoText, setEditTodoText] = useState("");
 
@@ -19,13 +20,19 @@ function App() {
     localStorage.setItem("todos", JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = () => {
+  const addTodo = (event) => {
+    event.preventDefault();
+
+    if (!addTodoFieldText) return;
+
     const newTodo = {
       done: false,
       id: crypto.randomUUID(), // You can use any unique identifier here
-      text: "New todo",
+      text: addTodoFieldText,
     };
+
     setTodos([...todos, newTodo]);
+    setAddTodoFieldText("");
   };
 
   const removeTodo = (id) => {
@@ -67,16 +74,24 @@ function App() {
         </div>
 
         {/* Add Todo Field */}
-        <div className="row mb-4">
-          <div className="col-8 col-md-10">
-            <input type="text" className="form-control" placeholder="Add new task..." />
+        <form onSubmit={(event) => addTodo(event)}>
+          <div className="row mb-4">
+            <div className="col-8 col-md-10">
+              <input
+                type="text"
+                className="form-control"
+                onChange={(event) => setAddTodoFieldText(event.currentTarget.value)}
+                value={addTodoFieldText}
+                placeholder="Add new task..."
+              />
+            </div>
+            <div className="col-4 col-md-2">
+              <button className="btn btn-primary w-100" type="submit">
+                Add Todo
+              </button>
+            </div>
           </div>
-          <div className="col-4 col-md-2">
-            <button className="btn btn-primary w-100" onClick={addTodo}>
-              Add Todo
-            </button>
-          </div>
-        </div>
+        </form>
 
         {/* List Display */}
         <div className="row">
