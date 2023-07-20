@@ -3,13 +3,14 @@ import OkCancelButtons from "./OkCancelButtons";
 
 /* eslint-disable react/prop-types */
 const TodoItem = (props) => {
+  // extract all of the props from the props to use props without having to type props all the time :P
+  const { id, text, done, doneHandler, editHandler, deleteHandler } = props;
+
+  // states
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
-  const [isDone, setIsDone] = useState(props.done);
-  const [inputFieldText, setInputFieldText] = useState(props.text);
-
-  // extract handlers from props
-  const { doneHandler, editHandler, deleteHandler } = props;
+  const [isDone, setIsDone] = useState(done);
+  const [inputFieldText, setInputFieldText] = useState(text);
 
   // svg image paths for checked and unchecked items
   const uncheckedPath =
@@ -28,7 +29,7 @@ const TodoItem = (props) => {
   // changes "done" status
   const changeDoneStatus = () => {
     setIsDone(!isDone);
-    doneHandler(props.id, !isDone);
+    doneHandler(id, !isDone);
   };
 
   // edit is finished (one way or another)
@@ -39,20 +40,20 @@ const TodoItem = (props) => {
 
     if (event.key === "Enter") {
       setEditMode(false);
-      if (event.target.value !== "") editHandler(props.id, event.currentTarget.value);
+      if (event.target.value !== "") editHandler(id, event.currentTarget.value);
     }
 
     if (event.type === "click") {
       if (inputFieldText !== "") {
         setEditMode(false);
-        editHandler(props.id, inputFieldText);
+        editHandler(id, inputFieldText);
       }
     }
   };
 
   // delete has been confirmed
   const deleteConfirmed = () => {
-    deleteHandler(props.id);
+    deleteHandler(id);
   };
 
   return (
@@ -75,7 +76,7 @@ const TodoItem = (props) => {
             style={{ cursor: "pointer" }}
             className={isDone ? "text-decoration-line-through text-secondary" : ""}
           >
-            {inputFieldText}
+            {text}
           </div>
         )}
 
