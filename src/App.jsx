@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import TodoList from "./components/TodoList.jsx";
 
 function App() {
   const initialTodos = JSON.parse(localStorage.getItem('todos')) || [];
@@ -92,4 +93,4 @@ function App() {
   );
 };
 
-export default App
+export default App;
